@@ -1,29 +1,53 @@
 import streamlit as st
-import ollama
 
-st.title("💬 Phi3 Chatbot")
+menu = ["mistral","phi3"]
+choice = st.sidebar.selectbox("Select Menu", menu)
 
-if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "Hello tehre, how can I help you, today?"}]
+if choice=="mistral":
+    from hugchat import hugchat
+    from hugchat.login import Login
 
-### Write Message History
-for msg in st.session_state.messages:
-    if msg["role"] == "user":
-        st.chat_message(msg["role"], avatar="🧑‍💻").write(msg["content"])
-    else:
-        st.chat_message(msg["role"], avatar="🤖").write(msg["content"])
+    st.subheader('Artificial Intelligence Smart Assistant (AISA)')
+    st.text('Dibangun dengan Model HuggingChat dari Huggingface yang dapat menjadi alternative open source (gratis) dari ChatGPT')
+    st.text('sumber: https://huggingface.co/chat/')
+    # App title
+    # st.set_page_config(page_title="🤗💬 HugChat")
+    EMAIL = 'agung.septia@gmail.com'
+    PASS = 'FXqk*4REQ9/9)d;'
+    hf_email = EMAIL
+    hf_pass = PASS
+    # Store LLM generated responses
+    if "messages" not in st.session_state.keys():
+        st.session_state.messages = [{"role": "assistant", "content": "Saya AISA, silakan bertanya :)"}]
 
-## Configure the model
-def generate_response():
-    response = ollama.chat(model='phi3', stream=True, messages=st.session_state.messages)
-    for partial_resp in response:
-        token = partial_resp["message"]["content"]
-        st.session_state["full_message"] += token
-        yield token
+    # Display chat messages
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
 
-if prompt := st.chat_input():
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user", avatar="🧑‍💻").write(prompt)
-    st.session_state["full_message"] = ""
-    st.chat_message("assistant", avatar="🤖").write_stream(generate_response)
-    st.session_state.messages.append({"role": "assistant", "content": st.session_state["full_message"]})
+    # Function for generating LLM response
+    def generate_response(prompt_input, email, passwd):
+        # Hugging Face Login
+        sign = Login(email, passwd)
+        cookies = sign.login()
+        # Create ChatBot                        
+        chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
+        return chatbot.chat(prompt_input)
+
+    # User-provided prompt
+    if prompt := st.chat_input(disabled=not (hf_email and hf_pass)):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.write(prompt)
+
+    # Generate a new response if last message is not from assistant
+    if st.session_state.messages[-1]["role"] != "assistant":
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                response = generate_response(prompt, hf_email, hf_pass) 
+                st.write(response) 
+        message = {"role": "assistant", "content": response}
+        st.session_state.messages.append(message)
+
+elif choice=="phi3":
+    st.write("blank")
