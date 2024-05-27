@@ -1,4 +1,4 @@
-install curl
-curl -fsSL https://ollama.com/install.sh | sh
+sudo curl -L https://ollama.com/download/ollama-linux-amd64 -o /usr/bin/ollama
+sudo chmod +x /usr/bin/ollama
 ollama pull phi3
 ollama pull nomic-embed-text
