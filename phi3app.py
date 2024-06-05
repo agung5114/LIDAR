@@ -14,7 +14,8 @@ for msg in st.session_state.messages:
 
 ## Configure the model
 def generate_response():
-    response = ollama.chat(model='phi3', stream=True, messages=st.session_state.messages)
+    # response = ollama.chat(model='phi3', stream=True, messages=st.session_state.messages)
+    response = ollama.chat(model='llama3', stream=True, messages=st.session_state.messages)
     for partial_resp in response:
         token = partial_resp["message"]["content"]
         st.session_state["full_message"] += token
@@ -22,6 +23,7 @@ def generate_response():
 
 if prompt := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": prompt})
+
     st.chat_message("user", avatar="🧑‍💻").write(prompt)
     st.session_state["full_message"] = ""
     st.chat_message("assistant", avatar="🤖").write_stream(generate_response)

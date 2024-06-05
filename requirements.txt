@@ -1,2 +1,33 @@
+# streamlit
+# ollama
+# langchain-community
+# pycryptodome==3.15.0
+# chromadb
+# llama-index
+# llama-index-llms-ollama
+# llama-index-embeddings-huggingface
+# llama-index-embeddings-instructor
+# chainlit
+
+# chainlit
+# langchain
+# langchain-community 
+# langchain-core
+# beautifulsoup4
+# tiktoken
+
+# PyPDF2
+# chromadb
+# groq
+# langchain-groq
+# ollama
+# python-dotenv
+# streamlit
+
+langchain
 streamlit
-ollama
+streamlit_chat
+chromadb
+pypdf
+fastembed
+cryptography
