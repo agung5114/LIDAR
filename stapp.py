@@ -14,22 +14,22 @@ chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
 def generate_response(prompt_input):
     return chatbot.chat(prompt_input)
 
-menu = ["mistral","phi3"]
-choice = st.sidebar.selectbox("Select Menu", menu)
+# menu = ["mistral","phi3"]
+# choice = st.sidebar.selectbox("Select Menu", menu)
 
 # st.write(chatbot.get_available_llm_models())  
          
 chatbot.switch_llm(0)
 
-if choice=="mistral":
-    st.subheader('Artificial Intelligence Smart Assistant (AISA)')
-    st.text('Dibangun dengan Model HuggingChat dari Huggingface yang dapat menjadi alternative open source (gratis) dari ChatGPT')
+# if choice=="mistral":
+    st.title('AI-Financial Assistant')
+    st.text('Dibangun dengan Model LLM Huggingface yang dapat menjadi alternative open source (gratis) dari ChatGPT')
     st.text('sumber: https://huggingface.co/chat/')
     # App title
     # st.set_page_config(page_title="🤗💬 HugChat")
     # Store LLM generated responses
     if "messages" not in st.session_state.keys():
-        st.session_state.messages = [{"role": "assistant", "content": "Saya AISA, silakan bertanya :)"}]
+        st.session_state.messages = [{"role": "assistant", "content": "Halo, silakan bertanya :)"}]
 
     # Display chat messages
     for message in st.session_state.messages:
