@@ -24,10 +24,11 @@
 # python-dotenv
 # streamlit
 
-langchain
+#langchain
 streamlit
-streamlit_chat
-chromadb
-pypdf
-fastembed
-cryptography
+#streamlit_chat
+#chromadb
+#pypdf
+#fastembed
+#cryptography
+hugchat
